@@ -5,12 +5,13 @@ from io import BytesIO
 # Page Configuration
 st.set_page_config(page_title="Eastern Region Clock Report", layout="centered")
 
-# --- IOS STYLE CSS ---
+# --- IOS DARK MODE STYLE CSS ---
 ios_style = """
     <style>
-    /* 1. Main Background - Apple Light Gray */
+    /* 1. Main Background - Pure Black */
     .stApp {
-        background-color: #F5F5F7;
+        background-color: #000000;
+        color: #F5F5F7;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
@@ -21,54 +22,64 @@ ios_style = """
 
     /* 2. Header Style */
     h2 {
-        color: #1D1D1F;
+        color: #F5F5F7;
         font-weight: 600;
         text-align: center;
         padding-bottom: 20px;
         font-size: 24px;
     }
 
-    /* 3. Card Container Style (File Uploader Area) */
+    /* 3. Card Container Style (File Uploader Area) - Dark Gray Card */
     div[data-testid="stFileUploader"] {
-        background-color: #FFFFFF;
+        background-color: #1C1C1E;
         padding: 30px;
         border-radius: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid #E5E5E5;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border: 1px solid #2C2C2E;
         text-align: center;
     }
+    
+    /* Upload text color */
+    .stFileUploader label {
+        color: #E5E5E5 !important;
+    }
 
-    /* Remove the standard 'Drag and drop' text if possible or style it */
+    /* Remove the standard 'Drag and drop' text background */
     .stFileUploader > div > div {
         background-color: transparent !important;
     }
     
-    /* 4. Button Style (Apple Blue Pill) */
+    /* 4. Button Style (iOS Dark Mode Blue) */
     .stButton > button {
-        background-color: #007AFF !important;
+        background-color: #0A84FF !important;
         color: white !important;
         border: none !important;
         border-radius: 999px !important; /* Pill shape */
         padding: 12px 24px !important;
         font-weight: 500 !important;
         font-size: 16px !important;
-        box-shadow: 0 2px 5px rgba(0, 122, 255, 0.2) !important;
+        box-shadow: 0 2px 5px rgba(10, 132, 255, 0.2) !important;
         width: 100% !important;
         transition: all 0.2s ease !important;
     }
 
     .stButton > button:hover {
-        background-color: #0062CC !important;
+        background-color: #007AFF !important;
         transform: scale(1.01);
-        box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3) !important;
+        box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4) !important;
     }
     
-    /* Success Message Style */
+    /* Success Message Style - Dark Mode */
     .stAlert {
-        background-color: #FFFFFF;
-        border: 1px solid #34C759;
-        color: #34C759;
+        background-color: #1C1C1E;
+        border: 1px solid #30D158;
+        color: #30D158;
         border-radius: 12px;
+    }
+    
+    /* Success text override */
+    .stMarkdown p {
+        color: #E5E5E5;
     }
     </style>
     """
@@ -262,7 +273,7 @@ if uploaded_file:
         )
         
         # Simple success text below
-        st.markdown("<p style='text-align: center; color: #34C759; font-size: 14px; margin-top: 10px;'>✓ Processing Complete</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; color: #30D158; font-size: 14px; margin-top: 10px;'>✓ Processing Complete</p>", unsafe_allow_html=True)
         
     except Exception as e:
         st.error(f"An error occurred: {e}")
