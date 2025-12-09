@@ -5,85 +5,27 @@ from io import BytesIO
 # Page Configuration
 st.set_page_config(page_title="Eastern Region Clock Report", layout="centered")
 
-# --- IOS DARK MODE STYLE CSS ---
-ios_style = """
+# --- SIMPLE DARK MODE CSS ---
+simple_dark_style = """
     <style>
-    /* 1. Main Background - Pure Black */
+    /* 1. Main Background - Standard Dark Mode */
     .stApp {
-        background-color: #000000;
-        color: #F5F5F7;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #0E1117;
+        color: #FAFAFA;
     }
 
-    /* Hide standard Streamlit Menu */
+    /* 2. Hide Streamlit Branding (Privacy) */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
 
-    /* 2. Header Style */
-    h2 {
-        color: #F5F5F7;
-        font-weight: 600;
-        text-align: center;
-        padding-bottom: 20px;
-        font-size: 24px;
-    }
-
-    /* 3. Card Container Style (File Uploader Area) - Dark Gray Card */
-    div[data-testid="stFileUploader"] {
-        background-color: #1C1C1E;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        border: 1px solid #2C2C2E;
-        text-align: center;
-    }
-    
-    /* Upload text color */
-    .stFileUploader label {
-        color: #E5E5E5 !important;
-    }
-
-    /* Remove the standard 'Drag and drop' text background */
-    .stFileUploader > div > div {
-        background-color: transparent !important;
-    }
-    
-    /* 4. Button Style (iOS Dark Mode Blue) */
+    /* 3. Simple Button Style (Standard Streamlit Dark Look) */
     .stButton > button {
-        background-color: #0A84FF !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 999px !important; /* Pill shape */
-        padding: 12px 24px !important;
-        font-weight: 500 !important;
-        font-size: 16px !important;
-        box-shadow: 0 2px 5px rgba(10, 132, 255, 0.2) !important;
-        width: 100% !important;
-        transition: all 0.2s ease !important;
-    }
-
-    .stButton > button:hover {
-        background-color: #007AFF !important;
-        transform: scale(1.01);
-        box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4) !important;
-    }
-    
-    /* Success Message Style - Dark Mode */
-    .stAlert {
-        background-color: #1C1C1E;
-        border: 1px solid #30D158;
-        color: #30D158;
-        border-radius: 12px;
-    }
-    
-    /* Success text override */
-    .stMarkdown p {
-        color: #E5E5E5;
+        width: 100%;
     }
     </style>
     """
-st.markdown(ios_style, unsafe_allow_html=True)
+st.markdown(simple_dark_style, unsafe_allow_html=True)
 
 # --- APP LOGIC STARTS HERE ---
 
@@ -120,11 +62,8 @@ def create_pivot_view(df_input, group_cols):
     return df_sorted, pd.DataFrame(formatted_rows, columns=group_cols)
 
 # 1. File Upload
-# We use label_visibility="hidden" to make it cleaner (IOS style)
-uploaded_file = st.file_uploader("Upload File", type="xlsx", label_visibility="collapsed")
-
-if not uploaded_file:
-    st.markdown("<p style='text-align: center; color: #86868b; margin-top: -10px;'>Upload your Clock Detail Report (.xlsx)</p>", unsafe_allow_html=True)
+# Reverted to standard label visibility for clarity in simple mode
+uploaded_file = st.file_uploader("Upload 'Clock Detail Report' (xlsx)", type="xlsx")
 
 if uploaded_file:
     try:
@@ -273,7 +212,7 @@ if uploaded_file:
         )
         
         # Simple success text below
-        st.markdown("<p style='text-align: center; color: #30D158; font-size: 14px; margin-top: 10px;'>✓ Processing Complete</p>", unsafe_allow_html=True)
+        st.success("Processing Complete")
         
     except Exception as e:
         st.error(f"An error occurred: {e}")
